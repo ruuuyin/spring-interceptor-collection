@@ -49,7 +49,7 @@ class AuthInterceptor @Autowired(required = false) constructor(private val token
         }
 
 
-        return true
+        return super.preHandle(request, response, handler)
     }
 
     override fun postHandle(
