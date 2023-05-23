@@ -90,4 +90,12 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Github Package Registry</name>
+            <url>https://maven.pkg.github.com/ruuuyin/spring-interceptor-collection</url>
+        </repository>
+    </distributionManagement>
+
 </project>

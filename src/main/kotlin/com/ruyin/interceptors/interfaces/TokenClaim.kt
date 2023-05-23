@@ -1,4 +1,4 @@
-package com.ruyin.interceptors.`interface`
+package com.ruyin.interceptors.interfaces
 
 interface TokenClaim {
     fun getUsername(): String?

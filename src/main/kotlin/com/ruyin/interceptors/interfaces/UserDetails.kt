@@ -1,6 +1,6 @@
-package com.ruyin.interceptors.`interface`
+package com.ruyin.interceptors.interfaces
 
-interface UserDetails {
+open interface UserDetails {
     fun getUsername() : String?
     fun getPassword() : String?
     fun isActive() : Boolean

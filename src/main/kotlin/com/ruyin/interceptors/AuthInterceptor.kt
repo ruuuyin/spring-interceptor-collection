@@ -4,10 +4,10 @@ import com.ruyin.interceptors.annotation.Auth
 import com.ruyin.interceptors.constant.ServletAttributeConstant
 import com.ruyin.interceptors.exception.AuthException
 import com.ruyin.interceptors.exception.InvalidTokenException
-import com.ruyin.interceptors.`interface`.TokenClaim
-import com.ruyin.interceptors.`interface`.TokenValidator
-import com.ruyin.interceptors.`interface`.UserDetailService
-import com.ruyin.interceptors.`interface`.UserDetails
+import com.ruyin.interceptors.interfaces.TokenClaim
+import com.ruyin.interceptors.interfaces.TokenValidator
+import com.ruyin.interceptors.interfaces.UserDetailService
+import com.ruyin.interceptors.interfaces.UserDetails
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
