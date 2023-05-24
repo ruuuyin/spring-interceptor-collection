@@ -14,15 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
-import org.springframework.web.servlet.ModelAndView
-import java.lang.Exception
 import java.util.Objects
 
 @Component
-class AuthInterceptor @Autowired(required = false) constructor(private val tokenValidator: TokenValidator,
-                                                               private val userDetailService : UserDetailService) : HandlerInterceptor {
+class AuthInterceptor @Autowired(required = false) constructor(
+    private val tokenValidator: TokenValidator,
+    private val userDetailService: UserDetailService
+) : HandlerInterceptor {
 
-    private val authorizationPrefix: String = "Bearer"
+    private var authorizationPrefix: String = "Bearer"
 
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
@@ -34,40 +34,22 @@ class AuthInterceptor @Autowired(required = false) constructor(private val token
         try {
             if (isAnnotationPresent) {
                 val token: String = validateHeader(request)
-                val claim : TokenClaim = tokenValidator.validate(token)
+                val claim: TokenClaim = tokenValidator.validate(token)
                     ?: throw InvalidTokenException()
 
-                val user : UserDetails = userDetailService.getUserByUsername(claim.getUsername())
+                val user: UserDetails = userDetailService.getUserByUsername(claim.getUsername())
                     ?: throw InvalidTokenException()
 
                 if (user.isActive()) throw AuthException("Access denied.")
 
-                request.setAttribute(ServletAttributeConstant.AUTHENTICATED_USER_ATTRIBUTE,user)
+                request.setAttribute(ServletAttributeConstant.AUTHENTICATED_USER_ATTRIBUTE, user)
             }
-        }catch (e: InvalidTokenException){
+        } catch (e: InvalidTokenException) {
             throw InvalidTokenException("Invalid token.")
         }
 
 
         return super.preHandle(request, response, handler)
-    }
-
-    override fun postHandle(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        handler: Any,
-        modelAndView: ModelAndView?
-    ) {
-        super.postHandle(request, response, handler, modelAndView)
-    }
-
-    override fun afterCompletion(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        handler: Any,
-        ex: Exception?
-    ) {
-        super.afterCompletion(request, response, handler, ex)
     }
 
 
