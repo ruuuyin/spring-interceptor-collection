@@ -11,6 +11,7 @@ import com.ruyin.interceptors.interfaces.UserDetails
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
@@ -22,7 +23,8 @@ class AuthInterceptor @Autowired(required = false) constructor(
     private val userDetailService: UserDetailService
 ) : HandlerInterceptor {
 
-    private var authorizationPrefix: String = "Bearer"
+    @Value(value = "\${interceptor.auth.authorization.prefix:Bearer}")
+    private lateinit var authorizationPrefix: String
 
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
